@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Bunny Lottery — Космический заяц (7 из 35 + 1 из 54)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="top-bar">
+    <div class="header">
+      <span class="bunny-mascot" aria-hidden="true">🐰🥕</span>
+      <h1>Cosmic Bunny Lottery</h1>
+    </div>
+    <button id="langToggle" class="lang-btn" onclick="toggleLanguage()" title="Switch language">EN</button>
+  </div>
+
+  <p id="subtitle" class="subtitle">
+    Космический заяц вытягивает счастливые морковные шары (7 из 35 + 1 из 54) на основе 100% телеметрии орбитальных спутников (NOAA SWPC, GOES, SOLAR-1/ACE и МКС) + 16 B CSPRNG + 16 B Jitter.
+  </p>
+
+  <div class="controls-row">
+    <div class="control-select-group">
+      <label id="sourceLabel" for="sourceSelect">🥕 Выберите космический источник энтропии:</label>
+      <select id="sourceSelect">
+        <option value="all" data-ru="0. [Мульти-поток] Все 5 космических API сразу (Макс. морковная удача)" data-en="0. [Multi-Stream] Combine all 5 space APIs simultaneously (Max carrot luck)">0. [Мульти-поток] Все 5 космических API сразу (Макс. морковная удача)</option>
+        <option value="solar_wind" data-ru="1. NOAA RTSW — Солнечный ветер (плазма в точке Лагранжа L1)" data-en="1. NOAA RTSW — Real-Time Solar Wind Plasma (Lagrange Point L1)">1. NOAA RTSW — Солнечный ветер (плазма в точке Лагранжа L1)</option>
+        <option value="mag_field" data-ru="2. NOAA RTSW — Межпланетное магнитное поле (векторы Bx, By, Bz)" data-en="2. NOAA RTSW — Interplanetary Magnetic Field (Bx, By, Bz vectors)">2. NOAA RTSW — Межпланетное магнитное поле (векторы Bx, By, Bz)</option>
+        <option value="xray" data-ru="3. NOAA GOES — Рентгеновское излучение солнечной короны" data-en="3. NOAA GOES — Solar Corona X-Ray Flux">3. NOAA GOES — Рентгеновское излучение солнечной короны</option>
+        <option value="protons" data-ru="4. NOAA GOES — Потоки высокоэнергетических космических протонов" data-en="4. NOAA GOES — High-Energy Cosmic Proton Flux">4. NOAA GOES — Потоки высокоэнергетических космических протонов</option>
+        <option value="iss" data-ru="5. Орбитальная телеметрия МКС — Координаты, скорость и солнечные углы" data-en="5. ISS Orbital Telemetry — Coordinates, velocity & solar angles">5. Орбитальная телеметрия МКС — Координаты, скорость и солнечные углы</option>
+      </select>
+    </div>
+    <button id="generateBtn" class="btn-primary" onclick="generateCosmicLottery()">
+      🐰 Сгенерировать числа
+    </button>
+  </div>
+
+  <div id="statusLog" class="status-log"></div>
+
+  <div id="resultBox" class="result-box">
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span id="metaSourceLabel">Активные источники</span>
+        <strong id="metaSource">—</strong>
+      </div>
+      <div class="meta-item">
+        <span id="metaBytesLabel">Размер пула энтропии</span>
+        <strong id="metaBytes">—</strong>
+      </div>
+    </div>
+
+    <div class="lottery-board">
+      <div class="field-group">
+        <div id="field1Label" class="field-title">🥕 Поле 1 (7 уникальных из 1–35)</div>
+        <div id="yellowBallsRow" class="balls-row"></div>
+      </div>
+
+      <div class="field-divider">+</div>
+
+      <div class="field-group">
+        <div id="field2Label" class="field-title">🐰 Поле 2 (1 из 1–54)</div>
+        <div id="pinkBallSlot" class="balls-row"></div>
+      </div>
+    </div>
+
+    <div class="hash-strip">
+      <div class="hash-strip-top">
+        <span id="seedHashLabel" class="hash-label">Контрольный SHA-256 пула энтропии</span>
+        <button id="copyComboBtn" class="btn-copy-mini" onclick="copyCombination()">Копировать числа</button>
+      </div>
+      <div id="seedHashOutput" class="hash-output"></div>
+    </div>
+
+    <div class="raw-preview" id="rawPreview"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
